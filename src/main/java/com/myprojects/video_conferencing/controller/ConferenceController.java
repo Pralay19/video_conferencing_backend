@@ -75,8 +75,10 @@ public class ConferenceController {
             Response<List<LivekitModels.Room>> response = call.execute();
             List<LivekitModels.Room> rooms = response.body();
 
-            List<String> roomNames = rooms.stream().map(LivekitModels.Room::getName).toList();
+            if(rooms == null)
+                throw new Exception();
 
+            List<String> roomNames = rooms.stream().map(LivekitModels.Room::getName).toList();
             return ResponseEntity.status(HttpStatus.OK).body(roomNames);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
