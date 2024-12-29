@@ -13,12 +13,12 @@ public class MediaServerHelper {
     @Value("${ms.key}")
     private String LivekitKey; // = "devkey";
 
-    public String createToken_RoomCreation(String name, String identity) {
+    public String createToken_RoomCreation(String name) {
 
         AccessToken token = new AccessToken(LivekitKey,LivekitSecret);
 
         token.setName(name);
-        token.setIdentity(identity);
+        token.setIdentity(String.valueOf(new Random().nextInt(10000)));
 //        token.setMetadata("metadata");
         token.addGrants(
                 new RoomCreate(true)
@@ -27,7 +27,7 @@ public class MediaServerHelper {
         return token.toJwt();
     }
 
-    public String createToken_RoomJoin(String name, String identity, String roomId) {
+    public String createToken_RoomJoin(String name, String roomId) {
         AccessToken token = new AccessToken(LivekitKey,LivekitSecret);
 
         token.setName(name);
